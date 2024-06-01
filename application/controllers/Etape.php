@@ -6,6 +6,9 @@ class Etape extends CI_Controller {
     public function __construct() {
         parent::__construct();       
         $this->load->model('Etape_model'); 
+		if ( empty($this->session->userdata("id_admin")) && empty ( ($this->session->userdata("id_equipe")  )) ) {
+            redirect('controlleur_user/index');
+        }
     }
 
     public function liste_etape() {	
