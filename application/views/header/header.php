@@ -233,8 +233,8 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">Harukii</span>
-                            <small class="text-muted">Admin</small>
+                            <span class="fw-semibold d-block"><?= $this->session->userdata('equipe') ?></span>
+                            <small class="text-muted">Equipe</small>
                           </div>
                         </div>
                       </a>

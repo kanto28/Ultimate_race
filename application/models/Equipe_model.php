@@ -31,6 +31,11 @@ class Equipe_model extends CI_Model {
         $query = $this->db->get_where('equipe', array('nom' => $username));
         return $query->row_array();
     }
+
+	public function get_coureurs($id_equipe) {
+        $query = $this->db->get_where('coureur', array('id_equipe' => $id_equipe));
+        return $query->result_array();
+    }
     
 
     //insert
