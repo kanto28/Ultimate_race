@@ -44,15 +44,13 @@ CREATE TABLE etape (
 
 CREATE TABLE participation (
     id_participation SERIAL PRIMARY KEY,
-    id_equipe INT NOT NULL,
     id_coureur INT NOT NULL,
     id_etape INT NOT NULL,
     heure_depart TIMESTAMP,
     heure_arrivee TIMESTAMP,
     penalite_secondes INT DEFAULT 0,
-    rang INT NOT NULL,
-    points_obtenus INT NOT NULL,
-    FOREIGN KEY (id_equipe) REFERENCES equipe(id_equipe),
+    -- rang INT NOT NULL,
+    -- points_obtenus INT NOT NULL,
     FOREIGN KEY (id_coureur) REFERENCES coureur(id_coureur),
     FOREIGN KEY (id_etape) REFERENCES etape(id_etape),
     UNIQUE (id_coureur, id_etape)

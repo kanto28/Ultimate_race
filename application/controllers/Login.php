@@ -73,6 +73,7 @@ class Login extends CI_Controller {
 		if ($this->Equipe_model->login($username, $password)) {
 			// Stockez uniquement l'ID utilisateur dans la session
 			$this->session->set_userdata('id_equipe', $user['id_equipe']);
+			$this->session->set_userdata('equipe', $user['nom']);
 			
 			// Déboguez la session utilisateur
 			log_message('debug', 'Utilisateur connecté, ID utilisateur: ' . $user['id_equipe']);
@@ -99,7 +100,9 @@ class Login extends CI_Controller {
 
 
     public function logout() {
-        $this->session->unset_userdata('user');
+        $this->session->sess_destroy();
+        session_destroy();
+        ob_clean();
         redirect('login');
     }
 	

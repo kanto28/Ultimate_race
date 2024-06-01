@@ -13,15 +13,28 @@
                     <h5 class="card-header">Affectation de coureur</h5>
 
                     <div class="card-body">
-                        <form method="post">
+                        <form method="post" action = "<?= site_url("coureur/coureur_affectation") ?>">
 
                         <!-- Debut Select -->
                             <div class="mb-3 row">
-                                <label for="html5-text-input" class="col-md-2 col-form-label">Produit</label>
+                                <label for="html5-text-input" class="col-md-2 col-form-label">Coureur</label>
                                 <div class="col-md-10">
-                                    <select id="defaultSelect" class="form-select" name="id_produit">
-                                        <?php foreach ($listeproduit as $produit): ?>
-                                            <option value="<?php echo $produit['id_produit']; ?>"><?php echo $produit['nom_produit']; ?></option>
+                                    <select id="defaultSelect" class="form-select" name="id_coureur">
+                                        <?php foreach ($coureurs as $coureur): ?>
+                                            <option value="<?php echo $coureur['id_coureur']; ?>"><?php echo $coureur['nom']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        <!-- /Fin select -->
+
+						<!-- Debut Select -->
+						<div class="mb-3 row">
+                                <label for="html5-text-input" class="col-md-2 col-form-label">Etape</label>
+                                <div class="col-md-10">
+                                    <select id="defaultSelect" class="form-select" name="id_etape">
+                                        <?php foreach ($etapes as $etape): ?>
+                                            <option value="<?php echo $etape['id_etape']; ?>"><?php echo $etape['nom']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -29,15 +42,18 @@
                         <!-- /Fin select -->
 
                         
-                        <!-- Debut input -->
-                            <div class="mb-3 row">
-                                <label for="html5-date-input" class="col-md-2 col-form-label">Date vente</label>
-                                <div class="col-md-10">
-                                <input class="form-control" type="date" name="date_vente" />
-                                </div>
-                            </div>
-                        <!-- /Fin input -->
-
+                        <?php
+						if ($erreur != 'aucun') {
+							?>
+							<div class="row mb-3">
+							<span class="badge border-danger border-1 text-danger">
+								<?= $erreur ?>
+							</span>
+							</div>
+							<?php
+						}
+						?>
+	
 
                             <div class="row justify-content-end">
                                 <div class="col-sm-10">
