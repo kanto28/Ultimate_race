@@ -49,6 +49,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/assets/vendor/css/core.css');?>" class="template-customizer-core-css" />
     <link rel="stylesheet" href="<?php echo base_url('assets/assets/vendor/css/theme-default.css');?>" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="<?php echo base_url('assets/assets/css/demo.css');?>" />
+		<link rel="stylesheet" href="<?php echo base_url('assets/assets/bootstrap-icons.css');?>" />
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="<?php echo base_url('assets/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css');?>" />
@@ -152,7 +153,7 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Pages</div>
+                <div data-i18n="Layouts">Equipe Option</div>
               </a>
 
               <ul class="menu-sub">
@@ -167,6 +168,33 @@
                       <div data-i18n="Blank">Affectation coureur</div>
                     </a>
                   </li>
+              </ul>
+            </li>
+
+						<li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bi bi-award"></i>
+                <div data-i18n="Layouts">Classement</div>
+              </a>
+
+              <ul class="menu-sub">
+							<li class="menu-item">
+                    <a href="<?php echo site_url('etape/classement_etape'); ?>" class="menu-link">
+                      <div data-i18n="Blank">Classement général</div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="<?php echo site_url('etape/classement_coureur'); ?>" class="menu-link">
+                      <div data-i18n="Blank">Classement Coureur</div>
+                    </a>
+                </li>
+
+								<li class="menu-item">
+                    <a href="<?php echo site_url('equipe/classement_equipe'); ?>" class="menu-link">
+                      <div data-i18n="Blank">Classement equipe</div>
+                    </a>
+                </li>
               </ul>
             </li>
 

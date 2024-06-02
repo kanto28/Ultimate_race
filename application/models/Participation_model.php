@@ -38,14 +38,27 @@ class Participation_model extends CI_Model {
 		}
 
 		$this->insert_Participation($id_coureur, $id_etape, $heure_depart);
-
-
 	}
 
     public function get_coureurs_by_equipe($id_equipe) {
         $query = $this->db->get_where('coureur', array('id_equipe' => $id_equipe));
         return $query->result_array();
     }
+
+	public function get_courreur_en_cours($id_etape) {
+		$sql = "SELECT * from v_coureur_en_course where id_etape = $id_etape";
+		$val = $this->DAO_model->find_by_request($sql);
+		return $val;
+	}
+
+	public function affecter_temps_coureur($id_coureur, $id_etape, $temps) {
+		$sql = "UPDATE participation 
+				set heure_arrivee = heure_depart + '$temps' 
+				where id_etape = $id_etape 
+				and id_coureur = $id_coureur";
+		echo $sql;
+		$this->db->query($sql);
+	}
    
 
    

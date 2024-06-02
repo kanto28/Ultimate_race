@@ -7,33 +7,53 @@ class Etape extends CI_Controller {
         parent::__construct();       
         $this->load->model('Etape_model'); 
 		if ( empty($this->session->userdata("id_admin")) && empty ( ($this->session->userdata("id_equipe")  )) ) {
-            redirect('controlleur_user/index');
+            redirect('login/index');
         }
     }
 
     public function liste_etape() {	
-        $idutilisateur = $this->session->idutilisateur;
         $data['listeEtape'] = $this->Etape_model->getEtapes();
-        $this->load->view('header/header');
-		$this->load->view('page/liste_etape',$data);
-		$this->load->view('footer/footer');
+		$data['pages'] = "liste_etape";
+		$this->load->view('dynamic-page',$data);
+	}
+
+	public function liste_etape_admin() {	
+		$this->load->model("Etape_model");
+        $data['listeEtape'] = $this->Etape_model->getEtapes();
+		$data['pages'] = "liste_etape";
+		if( !empty($this->session->userdata("id_admin")) ) {
+			$this->load->view('dynamic-admin-page',$data);
+		}
+		else {
+			$this->load->view('dynamic-page',$data);
+		}
 	}
 	
 
     public function classement_etape() {	
-        $idutilisateur = $this->session->idutilisateur;
+		$this->load->model("Etape_model");
         $data['listeClassement'] = $this->Etape_model->getClassement_Etapes();
-        $this->load->view('header/header');
-		$this->load->view('page/classement_etape',$data);
-		$this->load->view('footer/footer');
+		$data['pages'] = "classement_etape";
+		if( !empty($this->session->userdata("id_admin")) ) {
+			$this->load->view('dynamic-admin-page',$data);
+		}
+		else {
+			$this->load->view('dynamic-page',$data);
+		}
 	}
 
     public function classement_coureur() {	
-        $idutilisateur = $this->session->idutilisateur;
+		$this->load->model("Etape_model");
         $data['listeCoureur'] = $this->Etape_model->getClassement_coureur();
-        $this->load->view('header/header');
-		$this->load->view('page/classement_coureur',$data);
-		$this->load->view('footer/footer');
+		$data['pages'] = "classement_coureur";
+		if( !empty($this->session->userdata("id_admin")) ) {
+			$this->load->view('dynamic-admin-page',$data);
+		}
+		else {
+			$this->load->view('dynamic-page',$data);
+		}
+		
 	}
+	
    
 }
