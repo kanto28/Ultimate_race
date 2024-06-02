@@ -82,3 +82,40 @@ JOIN
 ORDER BY
     ce.id_etape, ce.rang;
 
+
+--Attribuer des points selon le rang des temps corrigés pour chaque coureur
+CREATE OR REPLACE VIEW v_classement_etape_complet AS
+SELECT
+    ce.id_etape,
+    e.nom AS nom_etape,
+    c.nom AS nom_coureur,
+    c.numero_dossard,
+    ce.rang,
+    ce.points,
+    c.id_equipe
+FROM
+    classement_etape ce
+JOIN
+    coureur c ON ce.id_coureur = c.id_coureur
+JOIN
+    etape e ON ce.id_etape = e.id_etape
+JOIN
+    equipe eq ON c.id_equipe = eq.id_equipe
+ORDER BY
+    ce.id_etape, ce.rang;
+
+
+
+CREATE OR REPLACE VIEW v_classement_general_equipe AS
+SELECT
+    ec.id_equipe,
+    e.nom AS nom_equipe,
+    SUM(ec.points) AS points_total
+FROM
+    v_classement_etape_complet ec
+JOIN
+    equipe e ON ec.id_equipe = e.id_equipe
+GROUP BY
+    ec.id_equipe, e.nom
+ORDER BY
+    points_total DESC;
