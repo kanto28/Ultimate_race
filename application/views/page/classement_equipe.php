@@ -19,6 +19,7 @@
                     <th>ID</th>
                     <th>Nom equipe</th>
                     <th>Point total</th>
+                    <th>Rang</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -28,6 +29,7 @@
                             <td><?php echo $equipe['id_equipe']; ?></td>
                             <td><?php echo $equipe['nom_equipe']; ?></td>
                             <td><?php echo $equipe['points_total']; ?></td>
+                            <td><?php echo $equipe['rang']; ?></td>
                         </tr>
                         <?php
                     endforeach; ?>

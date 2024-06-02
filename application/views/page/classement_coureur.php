@@ -18,8 +18,9 @@
                     <tr>
                     <th>ID</th>
                     <th>Nom coureur</th>
-                    <th>ID equipe</th>
+                    <th>Nom equipe</th>
                     <th>Point total</th>
+                    <th>Rang</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -28,8 +29,9 @@
                         <tr>
                             <td><?php echo $coureur['id_coureur']; ?></td>
                             <td><?php echo $coureur['nom']; ?> </td>
-                            <td><?php echo $coureur['id_equipe']; ?></td>
+                            <td><?php echo $coureur['nom_equipe']; ?></td>
                             <td><?php echo $coureur['points_total']; ?></td>
+                            <td><?php echo $coureur['rang']; ?></td>
                         </tr>
                         <?php
                     endforeach; ?>
