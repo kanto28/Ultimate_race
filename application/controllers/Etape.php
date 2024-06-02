@@ -20,5 +20,20 @@ class Etape extends CI_Controller {
 	}
 	
 
+    public function classement_etape() {	
+        $idutilisateur = $this->session->idutilisateur;
+        $data['listeClassement'] = $this->Etape_model->getClassement_Etapes();
+        $this->load->view('header/header');
+		$this->load->view('page/classement_etape',$data);
+		$this->load->view('footer/footer');
+	}
+
+    public function classement_coureur() {	
+        $idutilisateur = $this->session->idutilisateur;
+        $data['listeCoureur'] = $this->Etape_model->getClassement_coureur();
+        $this->load->view('header/header');
+		$this->load->view('page/classement_coureur',$data);
+		$this->load->view('footer/footer');
+	}
    
 }
