@@ -105,5 +105,32 @@ class Admin extends CI_Controller {
         ob_clean();
         redirect('login');
     }
+
+	public function reinitialiserDonnees() {
+		if ($this->input->post('reinitialiser') == 1) {
+		 
+			$sql = "
+			DO $$ 
+			DECLARE 
+				r RECORD; 
+			BEGIN 
+				FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname='public') LOOP 
+					IF r.tablename != 'admin' THEN
+						EXECUTE 'TRUNCATE TABLE ' || quote_ident(r.tablename) || ' CASCADE'; 
+					END IF;
+				END LOOP; 
+			END $$;
+			";
+	
+		   
+			$this->db->query($sql);
+		   
+			$this->session->set_flashdata('success_message', 'Les données ont été réinitialisées avec succès.');
+	
+	
+		  
+			redirect('Admin/dashboard');
+		}
+	}
 	
 }
