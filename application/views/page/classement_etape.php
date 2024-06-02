@@ -31,7 +31,7 @@
                             <td><?php echo $classement['id_etape']; ?></td>
                             <td><?php echo $classement['nom_etape']; ?></td>
                             <td><?php echo $classement['nom_coureur']; ?></td>
-                            <td><?php echo $classement['numero_dossard']; ?> km</td>
+                            <td><?php echo $classement['numero_dossard']; ?> </td>
                             <td><?php echo $classement['rang']; ?></td>
                             <td><?php echo $classement['points']; ?></td>
                         </tr>
