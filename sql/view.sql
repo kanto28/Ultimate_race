@@ -52,18 +52,21 @@ GROUP BY
     ce.id_coureur;
 
 --Voir le classement général des coureurs
-CREATE or replace  VIEW classement_general_coureur AS
+CREATE OR REPLACE VIEW classement_general_coureur AS
 SELECT
     c.id_coureur,
     c.nom,
-    c.id_equipe,
-    pt.points_total
+    e.nom AS nom_equipe,
+    pt.points_total,
+    RANK() OVER (ORDER BY pt.points_total DESC) AS rang
 FROM
     points_totaux_coureur pt
 JOIN
     coureur c ON pt.id_coureur = c.id_coureur
+JOIN
+    equipe e ON c.id_equipe = e.id_equipe
 ORDER BY
-    pt.points_total DESC;
+    rang;
 
 -- Voir les points pour chaque coureur pour chaque étape
 SELECT * FROM classement_etape;
@@ -114,15 +117,16 @@ ORDER BY
 
 
 CREATE OR REPLACE VIEW v_classement_general_equipe AS
-SELECT
-    ec.id_equipe,
-    e.nom AS nom_equipe,
-    SUM(ec.points) AS points_total
-FROM
-    v_classement_etape_complet ec
-JOIN
-    equipe e ON ec.id_equipe = e.id_equipe
-GROUP BY
-    ec.id_equipe, e.nom
-ORDER BY
-    points_total DESC;
+	SELECT
+		e.id_equipe,
+		e.nom AS nom_equipe,
+		SUM(ec.points) AS points_total,
+		RANK() OVER (ORDER BY SUM(ec.points) DESC) AS rang
+	FROM
+		v_classement_etape_complet ec
+	JOIN
+		equipe e ON ec.id_equipe = e.id_equipe
+	GROUP BY
+		e.id_equipe, e.nom
+	ORDER BY
+		rang;
