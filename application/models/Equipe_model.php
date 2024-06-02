@@ -36,6 +36,11 @@ class Equipe_model extends CI_Model {
         $query = $this->db->get_where('coureur', array('id_equipe' => $id_equipe));
         return $query->result_array();
     }
+
+
+    public function getClassement_Equipe() {
+        return $this->db->get('v_classement_general_equipe')->result_array();
+    }
     
 
     //insert
