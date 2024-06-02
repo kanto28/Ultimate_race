@@ -153,7 +153,7 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Pages</div>
+                <div data-i18n="Layouts">Admin Option</div>
               </a>
 
               <ul class="menu-sub">
@@ -186,7 +186,12 @@
 
                 <li class="menu-item">
                     <a href="<?php echo site_url('etape/classement_coureur'); ?>" class="menu-link">
-                      <div data-i18n="Blank">Classement équipe</div>
+                      <div data-i18n="Blank">Classement coureur</div>
+                    </a>
+                </li>
+								<li class="menu-item">
+                    <a href="<?php echo site_url('equipe/classement_equipe'); ?>" class="menu-link">
+                      <div data-i18n="Blank">Classement equipe</div>
                     </a>
                 </li>
               </ul>
