@@ -27,7 +27,7 @@
                         foreach ($listeCoureur as $coureur): ?>
                         <tr>
                             <td><?php echo $coureur['id_coureur']; ?></td>
-                            <td><?php echo $coureur['nom']; ?> km</td>
+                            <td><?php echo $coureur['nom']; ?> </td>
                             <td><?php echo $coureur['id_equipe']; ?></td>
                             <td><?php echo $coureur['points_total']; ?></td>
                         </tr>
