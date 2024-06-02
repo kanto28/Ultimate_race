@@ -8,6 +8,13 @@ from
 	join coureur on coureur.id_coureur = participation.id_coureur
 	join equipe on equipe.id_equipe = coureur.id_equipe;
 
+create or replace view v_coureur_en_course as 
+select
+ 	v.*
+from 
+	v_participation_equipe as v
+	where v.heure_arrivee is NULL;
+
 --Calculer le temps total corrigé pour chaque coureur pour chaque étape
 CREATE VIEW coureur_temps_corrige AS
 SELECT

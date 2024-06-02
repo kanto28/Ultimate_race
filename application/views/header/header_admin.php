@@ -49,6 +49,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/assets/vendor/css/core.css');?>" class="template-customizer-core-css" />
     <link rel="stylesheet" href="<?php echo base_url('assets/assets/vendor/css/theme-default.css');?>" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="<?php echo base_url('assets/assets/css/demo.css');?>" />
+		<link rel="stylesheet" href="<?php echo base_url('assets/assets/bootstrap-icons.css');?>" />
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="<?php echo base_url('assets/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css');?>" />
@@ -156,35 +157,37 @@
               </a>
 
               <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="<?php echo site_url('Vente/insertion_vente'); ?>" class="menu-link">
-                      <div data-i18n="Blank">Insertion vente</div>
+							<li class="menu-item">
+                    <a href="<?php echo site_url('etape/liste_etape_admin'); ?>" class="menu-link">
+                      <div data-i18n="Blank">Liste Etape</div>
                     </a>
-                  </li>
-                <li class="menu-item">
-                  <a href="<?php echo site_url('Users/formulaire_page'); ?>" class="menu-link">
-                    <div data-i18n="Without menu">Formulaire</div>
-                  </a>
                 </li>
+
                 <li class="menu-item">
-                  <a href="<?php echo site_url('Vente/liste'); ?>" class="menu-link">
-                    <div data-i18n="Without navbar">Liste de vente</div>
-                  </a>
+                    <a href="<?php echo site_url('admin_controlleur/coureur_affectation_temps'); ?>" class="menu-link">
+                      <div data-i18n="Blank">Temps coureur</div>
+                    </a>
                 </li>
-                <li class="menu-item">
-                  <a href="<?php echo site_url('Users/modification_page'); ?>" class="menu-link">
-                    <div data-i18n="Container">Modification</div>
-                  </a>
+              </ul>
+            </li>
+
+						<li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bi bi-award"></i>
+                <div data-i18n="Layouts">Classement</div>
+              </a>
+
+              <ul class="menu-sub">
+							<li class="menu-item">
+                    <a href="<?php echo site_url('etape/classement_etape'); ?>" class="menu-link">
+                      <div data-i18n="Blank">Classement général</div>
+                    </a>
                 </li>
+
                 <li class="menu-item">
-                  <a href="<?php echo site_url('Users/suppression_page'); ?>" class="menu-link">
-                    <div data-i18n="Fluid">Suppression</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="<?php echo site_url('Users/detail_page'); ?>" class="menu-link">
-                    <div data-i18n="Blank">Detail</div>
-                  </a>
+                    <a href="<?php echo site_url('etape/classement_coureur'); ?>" class="menu-link">
+                      <div data-i18n="Blank">Classement équipe</div>
+                    </a>
                 </li>
               </ul>
             </li>
@@ -252,7 +255,7 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">Harukii</span>
+                            <span class="fw-semibold d-block">Admin</span>
                             <small class="text-muted">Admin</small>
                           </div>
                         </div>
