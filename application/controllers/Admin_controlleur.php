@@ -31,7 +31,7 @@ class Admin_controlleur extends CI_Controller {
 			}
 		}
 
-		$this->load->view('dynamic-page', $data);
+		$this->load->view('dynamic-admin-page', $data);
 	}
 
 	public function coureur_etape($id_etape) {	
