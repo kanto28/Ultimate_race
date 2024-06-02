@@ -40,3 +40,11 @@ INSERT INTO participation ( id_coureur, id_etape, heure_depart, heure_arrivee, p
 ( 7, 2, '2024-06-02 07:00:00', '2024-06-02 07:50:00', 0 ),
 ( 3, 2, '2024-06-02 07:00:00', '2024-06-02 08:05:00', 0 ),
 ( 6, 2, '2024-06-02 07:00:00', '2024-06-02 08:15:00', 0 );
+
+INSERT INTO table_point (rang, points)
+VALUES
+    (1, 10),
+    (2, 6),
+    (3, 4),
+    (4, 2),
+    (5, 1);

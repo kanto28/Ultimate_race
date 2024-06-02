@@ -57,3 +57,8 @@ CREATE TABLE participation (
 );
 
 
+CREATE TABLE table_point (
+    rang INT PRIMARY KEY,
+    points INT
+);
+
