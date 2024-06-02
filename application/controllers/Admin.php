@@ -20,7 +20,7 @@ class Admin extends CI_Controller {
 
 	public function dashboard()
 	{
-		$this->load->view('header/header');
+		$this->load->view('header/header_admin');
 		$this->load->view('page_admin/dashboard');
 		$this->load->view('footer/footer');
 	}

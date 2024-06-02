@@ -7,7 +7,7 @@ class Coureur extends CI_Controller {
         parent::__construct(); 
 		$this->load->model('DAO_model'); 
 		if ( empty($this->session->userdata("id_equipe")) ) {
-            redirect('controlleur_user/index');
+            redirect('login/index');
         }
     }
 
@@ -27,6 +27,7 @@ class Coureur extends CI_Controller {
 		if(!empty($id_etape) && !empty($id_coureur) ) {
 			try {
 				$this->participation_model->affecter_coureur($id_coureur, $id_etape);
+				redirect('coureur/coureur_affectation');
 			} catch (Exception $e) {
 				$data["erreur"] = $e->getMessage();
 			}
