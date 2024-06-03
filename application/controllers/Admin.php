@@ -109,16 +109,64 @@ class Admin extends CI_Controller {
 
 	public function import_etape_resultat()
 	{
-		$this->load->view('header/header_admin');
-		$this->load->view('page_admin/import_etape_resultat');
-		$this->load->view('footer/footer');
+		$data["pages"] = "import_etape_resultat";
+		$data['erreur'] = "aucun";
+	
+		if (!empty($_FILES['etape_csv']['tmp_name']) && !empty( $_FILES['participation_csv']['tmp_name'] ) ) {
+            // Load CSV reader library
+            $this->load->library('CSVReader'); 
+			$this->load->model('csv_donne'); 
+            
+            // Chemin de téléchargement du fichier CSV
+            $csv_file_etape = $_FILES['etape_csv']['tmp_name'];
+			$csv_file_participation = $_FILES['participation_csv']['tmp_name'];
+			
+            // Parse data from CSV file
+            $csvDataEtape = $this->csvreader->parse_csv_delimiter($csv_file_etape, ',');
+			$csvDataParticipation = $this->csvreader->parse_csv_delimiter($csv_file_participation, ',');
+
+            // Afficher les données du fichier CSV
+            // print_r( $csvDataEtape );
+			// print_r( $csvDataParticipation );
+            try {
+				$this->csv_donne->import_csv_donne( $csvDataEtape, $csvDataParticipation );
+                redirect('Admin/import_etape_resultat');
+            } catch (Exception $e) {
+                $data['erreur'] = $e->getMessage();
+            }
+        }
+
+		$this->load->view('dynamic-admin-page', $data);
+
+		
 	}
 	
 	public function import_points()
 	{
-		$this->load->view('header/header_admin');
-		$this->load->view('page_admin/import_point');
-		$this->load->view('footer/footer');
+		$data["pages"] = "import_point";
+		$data['erreur'] = "aucun";
+		if (!empty($_FILES['point_csv']['tmp_name']) ) {
+            // Load CSV reader library
+            $this->load->library('CSVReader'); 
+			$this->load->model('csv_point'); 
+            
+            // Chemin de téléchargement du fichier CSV
+            $csv_file = $_FILES['point_csv']['tmp_name'];
+			
+            // Parse data from CSV file
+            $csvData = $this->csvreader->parse_csv_delimiter($csv_file, ',');
+
+            // Afficher les données du fichier CSV
+            // print_r( $csvData);
+            try {
+                $this->csv_point->insert_point_csv($csvData);
+                redirect('Admin/import_points');
+            } catch (Exception $e) {
+                $data['erreur'] = $e->getMessage();
+            }
+        }
+
+		$this->load->view('dynamic-admin-page', $data);
 	}
 	
 }

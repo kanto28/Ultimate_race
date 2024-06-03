@@ -3,7 +3,7 @@
 
 if ( ! defined('BASEPATH')) exit('No direct script acces allowed');
 
-class Csv_model extends CI_Model{
+class Csv_model_kanto extends CI_Model{
    
     public function __construct() {
         parent::__construct();
@@ -17,7 +17,8 @@ class Csv_model extends CI_Model{
             'rang' => $data[0],
             'points' => $data[1]
         );
-        //var_dump($data_insert);
+        // var_dump($data_insert);
+		print_r($data_insert);
         $this->db->insert('table_point_ref', $data_insert);
         $this->db->insert_id();
     }

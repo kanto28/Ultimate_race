@@ -12,7 +12,7 @@
                     <div class="card">
                         <h5 class="card-header">Importation</h5>
                         <div class="card-body">
-                        <form action="<?php echo site_url('Csv/import_resultat'); ?>" method="post" enctype="multipart/form-dat" >
+                        <form action="<?php echo site_url('Admin/import_etape_resultat'); ?>" method="post" enctype="multipart/form-data" >
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Import Etape</label>
                                 <input class="form-control" type="file" id="etape_csv" name="etape_csv" />
@@ -21,6 +21,17 @@
                                 <label for="formFile" class="form-label">Import Resultat</label>
                                 <input class="form-control" type="file" id="participation_csv" name="participation_csv" />
                             </div>
+							<?php
+								if ($erreur != 'aucun') {
+									?>
+									<div class="row mb-3">
+									<span class="badge border-danger border-1 text-danger">
+										<?= $erreur ?>
+									</span>
+									</div>
+									<?php
+								}
+								?>
                             <div class="col-sm-10">
                                 <button type="submit" class="btn btn-primary">Importer</button>
                             </div>

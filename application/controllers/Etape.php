@@ -22,7 +22,10 @@ class Etape extends CI_Controller {
         $data['listeEtape'] = $this->Etape_model->getEtapes();
 		$data['pages'] = "liste_etape";
 		if( !empty($this->session->userdata("id_admin")) ) {
-			$this->load->view('dynamic-admin-page',$data);
+			$pages = $data['pages'];
+			$this->load->view('header/header_admin');
+			$this->load->view("page/$pages", $data);
+			$this->load->view('footer/footer');
 		}
 		else {
 			$this->load->view('dynamic-page',$data);
@@ -35,7 +38,10 @@ class Etape extends CI_Controller {
         $data['listeClassement'] = $this->Etape_model->getClassement_Etapes();
 		$data['pages'] = "classement_etape";
 		if( !empty($this->session->userdata("id_admin")) ) {
-			$this->load->view('dynamic-admin-page',$data);
+			$pages = $data['pages'];
+			$this->load->view('header/header_admin');
+			$this->load->view("page/$pages", $data);
+			$this->load->view('footer/footer');
 		}
 		else {
 			$this->load->view('dynamic-page',$data);
@@ -47,7 +53,10 @@ class Etape extends CI_Controller {
         $data['listeCoureur'] = $this->Etape_model->getClassement_coureur();
 		$data['pages'] = "classement_coureur";
 		if( !empty($this->session->userdata("id_admin")) ) {
-			$this->load->view('dynamic-admin-page',$data);
+			$pages = $data['pages'];
+			$this->load->view('header/header_admin');
+			$this->load->view("page/$pages", $data);
+			$this->load->view('footer/footer');
 		}
 		else {
 			$this->load->view('dynamic-page',$data);

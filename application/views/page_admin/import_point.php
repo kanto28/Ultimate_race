@@ -12,11 +12,22 @@
                     <div class="card">
                         <h5 class="card-header">Importation</h5>
                         <div class="card-body">
-                            <form action="<?php echo site_url('Csv/import_point'); ?>" method="post" enctype="multipart/form-data">
+                            <form action="<?php echo site_url('Admin/import_points'); ?>" method="post" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="formFile" class="form-label">Import Points</label>
                                     <input class="form-control" type="file" id="point_csv" name="point_csv" />
                                 </div>
+								<?php
+								if ($erreur != 'aucun') {
+									?>
+									<div class="row mb-3">
+									<span class="badge border-danger border-1 text-danger">
+										<?= $erreur ?>
+									</span>
+									</div>
+									<?php
+								}
+								?>
                                 <div class="col-sm-10">
                                     <button type="submit" class="btn btn-primary">Importer</button>
                                 </div>

@@ -16,7 +16,10 @@ class Equipe extends CI_Controller  {
         $data['listeEquipe'] = $this->Equipe_model->getClassement_Equipe();
 		$data['pages'] = "classement_equipe";
 		if( !empty($this->session->userdata("id_admin")) ) {
-			$this->load->view('dynamic-admin-page',$data);
+			$pages = $data['pages'];
+			$this->load->view('header/header_admin');
+			$this->load->view("page/$pages", $data);
+			$this->load->view('footer/footer');
 		}
 		else {
 			$this->load->view('dynamic-page',$data);

@@ -43,6 +43,10 @@ class Etape_model extends CI_Model {
     public function getClassement_coureur() {
         return $this->db->get('classement_general_coureur')->result_array();
     }
+
+	public function inert_etape($data) {
+        return $this->db->insert("etape", $data);
+    }
    
    
 }
