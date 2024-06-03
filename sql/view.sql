@@ -194,3 +194,5 @@ from
 	coureur c
 	LEFT join coureur_categorie c_c on c.id_coureur = c_c.id_coureur
 	join categorie ct on ct.id_categorie = c_c.id_categorie; 
+
+
