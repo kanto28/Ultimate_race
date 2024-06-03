@@ -15,14 +15,14 @@ INSERT INTO categorie (nom_categorie) VALUES
 ('Senior');
 
 
-INSERT INTO coureur (nom, numero_dossard, genre, dtn, id_equipe, id_categorie) VALUES 
-('Lova', 1, 'Femme', '2000-05-15', 1, 2),
-('Sabrina', 2, 'Femme', '1998-09-25', 1, 2),
-('Justin', 3, 'Homme', '1995-12-12', 2, 1),
-('Vero', 4, 'Femme', '1997-04-08', 2, 2),
-('John', 5, 'Homme', '2001-11-30', 3, 1),
-('Jill', 6, 'Femme', '2002-02-14', 3, 2),
-('Victor', 7, 'Homme', '1996-07-18', 1, 1);
+INSERT INTO coureur (nom, numero_dossard, genre, dtn, id_equipe) VALUES 
+('Lova', 1, 'Femme', '2000-05-15', 1),
+('Sabrina', 2, 'Femme', '1998-09-25', 1),
+('Justin', 3, 'Homme', '1995-12-12', 2),
+('Vero', 4, 'Femme', '1997-04-08', 2),
+('John', 5, 'Homme', '2001-11-30', 3),
+('Jill', 6, 'Femme', '2002-02-14', 3),
+('Victor', 7, 'Homme', '1996-07-18', 1);
 
 INSERT INTO etape (nom, distance_km, nb_coureur_equipe, rang_etape, date_debut, date_fin) VALUES 
 ('Betsizaraina', 5.0, 2, 1, '2024-06-01 07:00:00', '2024-06-01 09:00:00'),

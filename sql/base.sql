@@ -1,5 +1,5 @@
-CREATE DATABASE race;
-\c race;
+-- CREATE DATABASE race;
+-- \c race;
 
 CREATE TABLE admin (
     id_admin SERIAL PRIMARY KEY,
@@ -26,9 +26,15 @@ CREATE TABLE coureur (
     genre VARCHAR(10) NOT NULL,
     dtn DATE NOT NULL,
     id_equipe INT NOT NULL,
-    id_categorie INT NOT NULL,
-    FOREIGN KEY (id_equipe) REFERENCES equipe(id_equipe),
-    FOREIGN KEY (id_categorie) REFERENCES categorie(id_categorie)
+    FOREIGN KEY (id_equipe) REFERENCES equipe(id_equipe)
+);
+
+create table coureur_categorie(
+    id_coureur_categorie SERIAL PRIMARY KEY,
+	id_coureur int,
+	id_categorie int,
+	FOREIGN KEY (id_coureur) REFERENCES coureur (id_coureur),
+	FOREIGN KEY (id_categorie) REFERENCES categorie (id_categorie)
 );
 
 
