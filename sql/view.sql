@@ -51,6 +51,23 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION is_junior_id(id_c int)
+RETURNS int AS $$
+DECLARE
+    dtn date;
+    result int;
+BEGIN
+    SELECT c.dtn INTO dtn FROM coureur c WHERE c.id_coureur = id_c;
+
+    IF dtn IS NULL THEN
+        RAISE EXCEPTION 'Aucune date de naissance trouvée pour l''identifiant %', id_c;
+    END IF;
+
+    result := is_junior(dtn);
+    RETURN result;
+END;
+$$ LANGUAGE plpgsql;
+
 
 
 create or replace view v_participation_equipe as
@@ -198,63 +215,115 @@ from
 
 -- --- classement general
 --categorie Homme
-CREATE OR REPLACE VIEW v_classement_general_equipe_homme AS
+CREATE OR REPLACE VIEW v_classement_general_coureur_homme_beta AS
 SELECT
+	c.id_coureur,
     e.id_equipe,
     e.nom AS nom_equipe,
-    SUM(ce.points) AS points_total,
-    RANK() OVER (ORDER BY SUM(ce.points) DESC) AS rang
+	CASE 
+		WHEN ( c.genre = 'M' ) then 0
+		else SUM(ce.points)
+	END AS points_total
 FROM
     classement_etape ce
 JOIN
     coureur c ON ce.id_coureur = c.id_coureur
 JOIN
     equipe e ON c.id_equipe = e.id_equipe
-WHERE
-    c.genre = 'M'
 GROUP BY
-    e.id_equipe, e.nom
+    c.id_coureur, e.id_equipe, e.nom, c.dtn;
+
+CREATE OR REPLACE VIEW v_classement_general_equipe_homme_beta AS
+select
+	id_equipe, nom_equipe, sum(points_total) as points_total 
+from 
+	v_classement_general_coureur_homme_beta
+	GROUP by id_equipe, nom_equipe;
+
+CREATE OR REPLACE VIEW v_classement_general_equipe_homme AS
+SELECT
+    id_equipe,
+    nom_equipe,
+	points_total,
+    RANK() OVER (ORDER BY points_total DESC) AS rang
+FROM
+    v_classement_general_equipe_homme_beta
 ORDER BY
     points_total DESC, rang;
 
 
 --categorie femme
-CREATE OR REPLACE VIEW v_classement_general_equipe_femme AS
+CREATE OR REPLACE VIEW v_classement_general_coureur_femme_beta AS
 SELECT
+	c.id_coureur,
     e.id_equipe,
     e.nom AS nom_equipe,
-    SUM(ce.points) AS points_total,
-    RANK() OVER (ORDER BY SUM(ce.points) DESC) AS rang
+	CASE 
+		WHEN ( c.genre = 'F' ) then 0
+		else SUM(ce.points)
+	END AS points_total
 FROM
     classement_etape ce
 JOIN
     coureur c ON ce.id_coureur = c.id_coureur
 JOIN
     equipe e ON c.id_equipe = e.id_equipe
-WHERE
-    c.genre = 'F'
 GROUP BY
-    e.id_equipe, e.nom
+    c.id_coureur, e.id_equipe, e.nom, c.dtn;
+
+CREATE OR REPLACE VIEW v_classement_general_equipe_femme_beta AS
+select
+	id_equipe, nom_equipe, sum(points_total) as points_total 
+from 
+	v_classement_general_coureur_femme_beta
+	GROUP by id_equipe, nom_equipe;
+
+CREATE OR REPLACE VIEW v_classement_general_equipe_femme AS
+SELECT
+    id_equipe,
+    nom_equipe,
+	points_total,
+    RANK() OVER (ORDER BY points_total DESC) AS rang
+FROM
+    v_classement_general_equipe_femme_beta
 ORDER BY
     points_total DESC, rang;
 
 
 --categorie junior
-CREATE OR REPLACE VIEW v_classement_general_equipe_junior AS
+CREATE OR REPLACE VIEW v_classement_general_coureur_junior_beta AS
 SELECT
+	c.id_coureur,
     e.id_equipe,
     e.nom AS nom_equipe,
-    SUM(ce.points) AS points_total,
-    RANK() OVER (ORDER BY SUM(ce.points) DESC) AS rang
+	CASE 
+		WHEN ( is_junior (c.dtn) = 0 ) then 0
+		else SUM(ce.points)
+	END AS points_total
 FROM
     classement_etape ce
 JOIN
     coureur c ON ce.id_coureur = c.id_coureur
 JOIN
     equipe e ON c.id_equipe = e.id_equipe
-WHERE
-    (DATE_PART('year', AGE(CURRENT_DATE, c.dtn)) < 18)
 GROUP BY
-    e.id_equipe, e.nom
+    c.id_coureur, e.id_equipe, e.nom, c.dtn;
+
+CREATE OR REPLACE VIEW v_classement_general_equipe_junior_beta AS
+select
+	id_equipe, nom_equipe, sum(points_total) as points_total 
+from 
+	v_classement_general_coureur_junior_beta
+	GROUP by id_equipe, nom_equipe;
+
+
+CREATE OR REPLACE VIEW v_classement_general_equipe_junior AS
+SELECT
+    id_equipe,
+    nom_equipe,
+	points_total,
+    RANK() OVER (ORDER BY points_total DESC) AS rang
+FROM
+    v_classement_general_equipe_junior_beta
 ORDER BY
     points_total DESC, rang;
