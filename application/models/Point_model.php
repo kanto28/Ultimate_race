@@ -9,7 +9,15 @@ class Point_model extends CI_Model {
         parent::__construct();
     }
 
-    public function insert_point($data) {
+    public function insert_point_data($data) {
+        return $this->db->insert('table_point', $data);
+    }
+
+	public function insert_point($rang, $points) {
+		$data = [
+			"rang" => $rang,
+			"points" => $points
+		];
         return $this->db->insert('table_point', $data);
     }
 
