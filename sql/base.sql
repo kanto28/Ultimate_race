@@ -64,7 +64,8 @@ CREATE TABLE participation (
 
 
 CREATE TABLE table_point (
-    rang INT PRIMARY KEY,
+    id_table_point SERIAL PRIMARY KEY,
+    rang INT,
     points INT
 );
 
@@ -94,6 +95,8 @@ CREATE TABLE participation_ref (
 
 
 CREATE TABLE table_point_ref (
-    rang INT PRIMARY KEY,
+    id_table_point SERIAL PRIMARY KEY,
+    rang INT,
     points INT
 );
+
