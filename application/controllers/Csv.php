@@ -14,7 +14,9 @@ class Csv extends CI_Controller {
 
 		if($_FILES['point_csv']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['point_csv']['tmp_name']))
         {
+			$this->load->library('CSVReader'); 
             $point_csv = $_FILES['point_csv']['tmp_name'];
+			
             if(($handle = fopen($point_csv, "r")) !== FALSE)
             {
                 while(($data = fgetcsv($handle ,1000, "," )) !== FALSE )
@@ -66,7 +68,7 @@ class Csv extends CI_Controller {
                         $value = str_replace('/', '-', $value);
 					}
                     
-                    $this->Csv_model->insert_Participation($id_coureur, $id_etape, $heure_depart, $penalite = 0);
+                    //$this->Csv_model->insert_Participation($id_coureur, $id_etape, $heure_depart, $penalite = 0);
 					
                 }
                 fclose($handle);
