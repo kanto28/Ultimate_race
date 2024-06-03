@@ -42,6 +42,12 @@ class Admin_controlleur extends CI_Controller {
         echo json_encode($coureur);
 	}
 
+	public function recategoriser() {
+		$this->load->model('categorie_model'); 
+		$this->categorie_model->recategoriser();
+		redirect('Admin/dashboard');
+	}
+
 	
 
    
