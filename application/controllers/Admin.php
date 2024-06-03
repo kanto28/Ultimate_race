@@ -101,5 +101,19 @@ class Admin extends CI_Controller {
 			redirect('Admin/dashboard');
 		}
 	}
+
+	public function import_etape_resultat()
+	{
+		$this->load->view('header/header_admin');
+		$this->load->view('page_admin/import_etape_resultat');
+		$this->load->view('footer/footer');
+	}
+	
+	public function import_points()
+	{
+		$this->load->view('header/header_admin');
+		$this->load->view('page_admin/import_point');
+		$this->load->view('footer/footer');
+	}
 	
 }
