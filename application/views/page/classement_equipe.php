@@ -3,15 +3,20 @@
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Classement /</span> Equipe</h4>
 
 
-        <button type="button" class="btn btn-primary"  onClick="addPdf()" id="export">Exporter PDF </button>
+        <!-- <button type="button" class="btn btn-primary"  onClick="addPdf()" id="export">Exporter PDF </button>
         <hr>
-        
+         -->
         <!-- Atao ato anatin'ito ze ho exportena pdf-->
+		<a  href="<?= site_url('equipe/classement_equipe?categ=Tous') ?>" ><button type="button" class="btn btn-primary">Tous</button></a>
+		<a  href="<?= site_url('equipe/classement_equipe?categ=Homme') ?>" ><button type="button" class="btn btn-primary">Homme</button></a>
+		<a  href="<?= site_url('equipe/classement_equipe?categ=Femme') ?>" ><button type="button" class="btn btn-primary">Femme</button></a>
+		<a  href="<?= site_url('equipe/classement_equipe?categ=Junior') ?>" ><button type="button" class="btn btn-primary">Junior</button></a>
+		<hr>
         <div class="card" id="table">
 
+
             <!-- Eto manomboka le tableau -->
-            <h5 class="card-header">Classemet des Equipes</h5>
-            
+            <h5 class="card-header">Classemet des Equipes : <?= $categ ?></h5>
             <div class="table-responsive text-nowrap">
                 <table class="table">
                 <thead class="table-dark">
