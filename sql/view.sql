@@ -1,3 +1,58 @@
+CREATE OR REPLACE FUNCTION get_categorie_by_genre(genre varchar)
+RETURNS int AS $$
+DECLARE
+    id_categorie int;
+    nom_categ varchar;
+BEGIN
+
+    IF genre = 'M' THEN
+        nom_categ := 'Homme';
+    ELSIF genre = 'F' THEN
+        nom_categ := 'Femme';
+    ELSE
+        RAISE EXCEPTION 'Genre invalide : %', genre;
+    END IF;
+
+    SELECT c.id_categorie
+    INTO id_categorie
+    FROM categorie c
+    WHERE c.nom_categorie = nom_categ;
+
+    RETURN id_categorie;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION get_categorie_by_name(nom_categ varchar)
+RETURNS int AS $$
+DECLARE
+    id_categorie int;
+BEGIN
+    SELECT c.id_categorie
+    INTO id_categorie
+    FROM categorie c
+    WHERE c.nom_categorie = nom_categ;
+
+    RETURN id_categorie;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION is_junior(dtn date)
+RETURNS int AS $$
+DECLARE
+    age int;
+BEGIN
+    age := DATE_PART('year', AGE(CURRENT_DATE, dtn));
+    IF age < 18 THEN
+        RETURN 1;
+    ELSE
+        RETURN 0;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
 create or replace view v_participation_equipe as
 select 
 	participation.*,
@@ -130,3 +185,12 @@ CREATE OR REPLACE VIEW v_classement_general_equipe AS
 		e.id_equipe, e.nom
 	ORDER BY
 		rang;
+
+create or replace view v_coureur_categ as
+select 
+	c.*,
+	ct.*
+from 
+	coureur c
+	LEFT join coureur_categorie c_c on c.id_coureur = c_c.id_coureur
+	join categorie ct on ct.id_categorie = c_c.id_categorie; 
