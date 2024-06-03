@@ -22,6 +22,15 @@ class Participation_model extends CI_Model {
     }
 
 	public function affecter_coureur($id_coureur, $id_etape) {
+
+		$sql_verif = "SELECT * from participation where id_coureur = $id_coureur and id_etape = $id_etape";
+		$verif = $this->DAO_model->find_by_request_one_row($sql_verif);
+
+		if( !empty($verif) ) {
+			throw new Exception("Coureur deja affecte");
+		}
+
+
 		$etape = $this->DAO_model->find_by_id("etape", $id_etape);
 		$heure_depart = $etape["date_debut"];
 		$nb_coureur_equipe = $etape["nb_coureur_equipe"];
@@ -34,7 +43,7 @@ class Participation_model extends CI_Model {
 		$affecte = $affecte["aff"];
 
 		if($nb_coureur_equipe == $affecte) {
-			throw new Exception("Efa feno");
+			throw new Exception("Nombre maximum d'affectation atteint ");
 		}
 
 		$this->insert_Participation($id_coureur, $id_etape, $heure_depart);
