@@ -20,9 +20,22 @@ CREATE or replace  VIEW coureur_temps_corrige AS
 SELECT
     p.id_coureur,
     p.id_etape,
-    EXTRACT(EPOCH FROM (p.heure_arrivee - p.heure_depart)) + p.penalite_secondes AS temps_total_corrige
+    EXTRACT(EPOCH FROM (p.heure_arrivee - p.heure_depart)) + p.penalite_secondes AS temps_total_corrige,
+	TO_CHAR(
+        INTERVAL '1 second' * (EXTRACT(EPOCH FROM (p.heure_arrivee - p.heure_depart)) + p.penalite_secondes),
+        'HH24:MI:SS'
+    ) AS temps_total_format
 FROM
     participation p;
+
+CREATE or replace  VIEW coureur_temps_corrige_lib AS
+SELECT
+    c_t_c.*,
+	c.id_equipe ,c.nom, c.numero_dossard, c.genre, c.dtn
+FROM
+    coureur_temps_corrige c_t_c
+	join coureur c on c.id_coureur = c_t_c.id_coureur;
+
 
 --Attribuer des points selon le rang des temps corrigés pour chaque coureur
 CREATE or replace  VIEW classement_etape AS
