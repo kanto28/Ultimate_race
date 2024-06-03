@@ -203,20 +203,26 @@
 
             <li class="menu-item">
               <a href="<?php echo site_url('Admin/import_etape_resultat'); ?>" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <i class="menu-icon tf-icons bi bi-filetype-csv"></i>
                 <div data-i18n="Basic">Import resultat et etape</div>
               </a>
             </li>
             <li class="menu-item">
               <a href="<?php echo site_url('Admin/import_points'); ?>" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <i class="menu-icon tf-icons bi bi-filetype-csv"></i>
                 <div data-i18n="Basic">Import points</div>
               </a>
             </li>
             <!-- Cards -->
+						<li class="menu-item">
+              <a href="<?php echo site_url('Admin_controlleur/recategoriser'); ?>" class="menu-link">
+                <i class="menu-icon tf-icons bi bi bi-tags"></i>
+                <div data-i18n="Basic">Generer categorie</div>
+              </a>
+            </li>
             <li class="menu-item">
               <a href="<?php echo site_url('Admin/renitialiser'); ?>" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <i class="menu-icon tf-icons bi bi-arrow-clockwise"></i>
                 <div data-i18n="Basic">Renitialiser</div>
               </a>
             </li>
