@@ -22,8 +22,6 @@
                     <th>Nb coureur</th>
                     <th>Rang</th>
                     <th>Date debut</th>
-                    <th>Date fin</th>
-                    <th>Affecter Coureurs</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -36,7 +34,6 @@
                             <td><?php echo $etape['nb_coureur_equipe']; ?></td>
                             <td><?php echo $etape['rang_etape']; ?></td>
                             <td><?php echo $etape['date_debut']; ?></td>
-                            <td><?php echo $etape['date_fin']; ?></td>
                         </tr>
                         <?php
                     endforeach; ?>
