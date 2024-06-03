@@ -198,7 +198,21 @@
             </li>
 
             <!-- Components -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin</span></li>
+            <!-- Cards -->
+
+            <li class="menu-item">
+              <a href="<?php echo site_url('Admin/import_etape_resultat'); ?>" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Import resultat et etape</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="<?php echo site_url('Admin/import_points'); ?>" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Import points</div>
+              </a>
+            </li>
             <!-- Cards -->
             <li class="menu-item">
               <a href="<?php echo site_url('Admin/renitialiser'); ?>" class="menu-link">
