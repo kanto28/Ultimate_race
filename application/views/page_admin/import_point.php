@@ -12,13 +12,15 @@
                     <div class="card">
                         <h5 class="card-header">Importation</h5>
                         <div class="card-body">
-                            <div class="mb-3">
-                                <label for="formFile" class="form-label">Import Points</label>
-                                <input class="form-control" type="file" id="formFile" />
-                            </div>
-                            <div class="col-sm-10">
-                                <button type="submit" name="reinitialiser" value="1" class="btn btn-primary">Importer</button>
-                            </div>
+                            <form action="<?php echo site_url('Csv/import_point'); ?>" method="post" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Import Points</label>
+                                    <input class="form-control" type="file" id="point_csv" name="point_csv" />
+                                </div>
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Importer</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
