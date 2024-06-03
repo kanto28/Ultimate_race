@@ -194,3 +194,67 @@ from
 	coureur c
 	LEFT join coureur_categorie c_c on c.id_coureur = c_c.id_coureur
 	join categorie ct on ct.id_categorie = c_c.id_categorie; 
+
+
+-- --- classement general
+--categorie Homme
+CREATE OR REPLACE VIEW v_classement_general_equipe_homme AS
+SELECT
+    e.id_equipe,
+    e.nom AS nom_equipe,
+    SUM(ce.points) AS points_total,
+    RANK() OVER (ORDER BY SUM(ce.points) DESC) AS rang
+FROM
+    classement_etape ce
+JOIN
+    coureur c ON ce.id_coureur = c.id_coureur
+JOIN
+    equipe e ON c.id_equipe = e.id_equipe
+WHERE
+    c.genre = 'M'
+GROUP BY
+    e.id_equipe, e.nom
+ORDER BY
+    points_total DESC, rang;
+
+
+--categorie femme
+CREATE OR REPLACE VIEW v_classement_general_equipe_femme AS
+SELECT
+    e.id_equipe,
+    e.nom AS nom_equipe,
+    SUM(ce.points) AS points_total,
+    RANK() OVER (ORDER BY SUM(ce.points) DESC) AS rang
+FROM
+    classement_etape ce
+JOIN
+    coureur c ON ce.id_coureur = c.id_coureur
+JOIN
+    equipe e ON c.id_equipe = e.id_equipe
+WHERE
+    c.genre = 'F'
+GROUP BY
+    e.id_equipe, e.nom
+ORDER BY
+    points_total DESC, rang;
+
+
+--categorie junior
+CREATE OR REPLACE VIEW v_classement_general_equipe_junior AS
+SELECT
+    e.id_equipe,
+    e.nom AS nom_equipe,
+    SUM(ce.points) AS points_total,
+    RANK() OVER (ORDER BY SUM(ce.points) DESC) AS rang
+FROM
+    classement_etape ce
+JOIN
+    coureur c ON ce.id_coureur = c.id_coureur
+JOIN
+    equipe e ON c.id_equipe = e.id_equipe
+WHERE
+    (DATE_PART('year', AGE(CURRENT_DATE, c.dtn)) < 18)
+GROUP BY
+    e.id_equipe, e.nom
+ORDER BY
+    points_total DESC, rang;
