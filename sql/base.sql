@@ -68,3 +68,32 @@ CREATE TABLE table_point (
     points INT
 );
 
+CREATE TABLE etape_ref (
+    id_etape SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    distance_km FLOAT NOT NULL,
+    nb_coureur_equipe INT NOT NULL,
+    rang_etape INT NOT NULL,
+    date_debut TIMESTAMP NOT NULL,
+    date_fin TIMESTAMP NOT NULL
+);
+
+CREATE TABLE participation_ref (
+    id_participation SERIAL PRIMARY KEY,
+    id_coureur INT NOT NULL,
+    id_etape INT NOT NULL,
+    heure_depart TIMESTAMP,
+    heure_arrivee TIMESTAMP,
+    penalite_secondes INT DEFAULT 0,
+    -- rang INT NOT NULL,
+    -- points_obtenus INT NOT NULL,
+    FOREIGN KEY (id_coureur) REFERENCES coureur(id_coureur),
+    FOREIGN KEY (id_etape) REFERENCES etape(id_etape),
+    UNIQUE (id_coureur, id_etape)
+);
+
+
+CREATE TABLE table_point_ref (
+    rang INT PRIMARY KEY,
+    points INT
+);
