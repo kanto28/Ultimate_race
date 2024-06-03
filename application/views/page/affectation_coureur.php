@@ -1,72 +1,58 @@
+ <style>
+	.ajout_coureur {
+		margin-top: 20px;
+    	margin-left: 20px;
+	}
+ </style>
  <!-- Content wrapper -->
  <div class="content-wrapper">
-            <!-- Content -->
-
-    <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Insertion /</span> Coureur</h4>
-
-            <div class="row">
-                
-                <div class="col-xl-6">
-                 
-                  <div class="card mb-4">
-                    <h5 class="card-header">Affectation de coureur</h5>
-
-                    <div class="card-body">
-                        <form method="post" action = "<?= site_url("coureur/coureur_affectation") ?>">
-
-                        <!-- Debut Select -->
-                            <div class="mb-3 row">
-                                <label for="html5-text-input" class="col-md-2 col-form-label">Coureur</label>
-                                <div class="col-md-10">
-                                    <select id="defaultSelect" class="form-select" name="id_coureur">
-                                        <?php foreach ($coureurs as $coureur): ?>
-                                            <option value="<?php echo $coureur['id_coureur']; ?>"><?php echo $coureur['nom']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        <!-- /Fin select -->
-
-						<!-- Debut Select -->
-						<div class="mb-3 row">
-                                <label for="html5-text-input" class="col-md-2 col-form-label">Etape</label>
-                                <div class="col-md-10">
-                                    <select id="defaultSelect" class="form-select" name="id_etape">
-                                        <?php foreach ($etapes as $etape): ?>
-                                            <option value="<?php echo $etape['id_etape']; ?>"><?php echo $etape['nom']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        <!-- /Fin select -->
-
-                        
-                        <?php
-						if ($erreur != 'aucun') {
-							?>
-							<div class="row mb-3">
-							<span class="badge border-danger border-1 text-danger">
-								<?= $erreur ?>
-							</span>
-							</div>
+        
+	<div class="card" >
+					
+			<?php
+			foreach($etapes_coureurs as $etapes_coureur) {
+			?>
+				<div class="" style="margin-bottom: 30px" >
+					<!-- Eto manomboka le tableau -->
+					<h5 class="card-header"><?= $etapes_coureur['etape']['nom']; ?> - <?php $etapes_coureur['etape']['distance_km']; ?> km</h5>
+            
+					<div class="table-responsive text-nowrap">
+						<table class="table">
+						<thead class="table-dark">
+							<tr>
+								<th>Nom coureur</th>
+								<th>Temps Chrono</th>
+							</tr>
+						</thead>
+						<tbody class="table-border-bottom-0">
 							<?php
-						}
-						?>
-	
+							foreach($etapes_coureur['coureurs'] as $coureur) {
+							?>	
+								<tr>
+									<td><?= $coureur['nom'] ?></td>
+									<td><?= $coureur['temps_total_format'] ?></td>
+								</tr>
+							<?php
+							}
+							?>
+						</tbody>
+						</table>
+					</div>
+					<!-- Eto mifarana le tableau -->
+					<div class="ajout_coureur">
+						<a href = "<?= site_url("coureur/coureur_affectation_modal/".$etapes_coureur['etape']['id_etape']) ?>">
+							<button type="submit" class="btn btn-primary"> Ajouter Coureur </button>  
+						</a>
+						
+					</div>
+				</div>
+				 
+			<?php
+			}
+			?>
+									
 
-                            <div class="row justify-content-end">
-                                <div class="col-sm-10">
-                                    <button type="submit" class="btn btn-primary">Send</button>
-                                </div>
-                            </div>
-                            
-                        </form>
+    </div>
 
-                    
-                    </div>  <!-- / card body -->
-                </div><!-- / col-->
-            </div><!-- / row-->
-    </div><!-- / container-->
 </div>
 <!-- / Content -->
