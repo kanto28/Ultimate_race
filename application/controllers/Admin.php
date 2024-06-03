@@ -8,6 +8,11 @@ class Admin extends CI_Controller {
         $this->load->model('Admin_model');
     }
 
+	public function index()
+	{
+		$this->load->view('page_admin/login_admin');
+	}
+	
 	public function renitialiser()
 	{
 		$this->load->view('header/header_admin');
