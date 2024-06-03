@@ -8,11 +8,13 @@ class Admin extends CI_Controller {
         $this->load->model('Admin_model');
     }
 
-	public function index()
+	public function renitialiser()
 	{
-		$this->load->view('page_admin/login_admin');
+		$this->load->view('header/header_admin');
+		$this->load->view('page_admin/renitialiser');
+		$this->load->view('footer/footer');
 	}
-
+	
 	public function inscription()
 	{
 		$this->load->view('page/inscription');
@@ -26,39 +28,6 @@ class Admin extends CI_Controller {
 	}
 
 
-
-	// public function connecter_user(){
-	// 	$username = trim($this->input->post('username'));
-	// 	$password = trim($this->input->post('password'));
-	// 	echo $username;
-	// 	echo $password;
-	// 	$user = $this->User_model->getUserByUsername($username);
-	// 	if ($this->User_model->login($username, $password)) {
-	// 		$this->session->set_userdata('user',$user);			
-	// 		redirect('Login/dashboard');
-	// 	} else {				
-	// 		redirect('login/error_login/'.$username);
-	// 	}
-	// }	
-
-	// public function connecter_user() {
-	// 	$username = trim($this->input->post('username'));
-	// 	$password = trim($this->input->post('password'));
-		
-	// 	// Déboguer les valeurs d'entrée
-	// 	echo 'Username: ' . $username . '<br>';
-	// 	echo 'Password: ' . $password . '<br>';
-
-	// 	$user = $this->User_model->getUserByUsername($username);
-	// 	if ($this->User_model->login($username, $password)) {
-	// 		// Stockez uniquement l'ID utilisateur dans la session
-	// 		$this->session->set_userdata('id_admin', $user['id_admin']);
-	// 		var_dump($user['idutilisateur']);
-	// 		redirect('Login/dashboard');
-	// 	} else {
-	// 		redirect('login/error_login/'.$username);
-	// 	}
-	// }
 
 	public function connecter_admin() {
 		$username = trim($this->input->post('username'));
