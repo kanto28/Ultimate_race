@@ -13,8 +13,15 @@ class Equipe extends CI_Controller  {
 	
 
     public function classement_equipe() {	
-        $data['listeEquipe'] = $this->Equipe_model->getClassement_Equipe();
 		$data['pages'] = "classement_equipe";
+
+		$categ = $this->input->get("categ");
+		if(empty($categ)) {
+			$categ = "Tous";
+		}
+		$data['categ'] = $categ;
+		$data['listeEquipe'] = $this->Equipe_model->getClassement($categ);
+
 		if( !empty($this->session->userdata("id_admin")) ) {
 			$pages = $data['pages'];
 			$this->load->view('header/header_admin');
