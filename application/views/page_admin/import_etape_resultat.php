@@ -12,17 +12,17 @@
                     <div class="card">
                         <h5 class="card-header">Importation</h5>
                         <div class="card-body">
-                        <form method="post" action="<?php echo site_url('Admin/reinitialiserDonnees'); ?>">
+                        <form action="<?php echo site_url('Csv/import_resultat'); ?>" method="post" enctype="multipart/form-dat" >
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Import Etape</label>
-                                <input class="form-control" type="file" id="formFile" />
+                                <input class="form-control" type="file" id="etape_csv" name="etape_csv" />
                             </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Import Resultat</label>
-                                <input class="form-control" type="file" id="formFile" />
+                                <input class="form-control" type="file" id="participation_csv" name="participation_csv" />
                             </div>
                             <div class="col-sm-10">
-                                <button type="submit" name="reinitialiser" value="1" class="btn btn-primary">Importer</button>
+                                <button type="submit" class="btn btn-primary">Importer</button>
                             </div>
                         </form> 
                         </div>
