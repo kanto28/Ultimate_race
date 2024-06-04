@@ -7,6 +7,7 @@ class Admin extends CI_Controller {
         parent::__construct();
         $this->load->model('Admin_model');
 		$this->load->model('Categorie_model');
+		$this->load->model('Equipe_model');
     }
 
 	public function index()
@@ -182,4 +183,13 @@ class Admin extends CI_Controller {
         }
     }
 	
+
+	public function detailsEquipe()
+	{
+        $id_equipe = $this->input->get('id_equipe'); 
+        $data['allEquipe'] = $this->Equipe_model->getDetailEquipe($id_equipe);
+		$this->load->view('header/header_admin');
+		$this->load->view('page_admin/certification',$data);
+		$this->load->view('footer/footer');
+	}
 }
