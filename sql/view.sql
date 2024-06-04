@@ -122,7 +122,7 @@ JOIN (
     SELECT
         id_etape,
         id_coureur,
-        RANK() OVER (PARTITION BY id_etape ORDER BY temps_total_corrige ASC) AS rang
+        DENSE_RANK() OVER (PARTITION BY id_etape ORDER BY temps_total_corrige ASC) AS rang
     FROM
         coureur_temps_corrige
 ) r ON c.id_etape = r.id_etape AND c.id_coureur = r.id_coureur
