@@ -103,10 +103,11 @@ FROM
 CREATE or replace  VIEW coureur_temps_corrige_lib AS
 SELECT
     c_t_c.*,
-	c.id_equipe ,c.nom, c.numero_dossard, c.genre, c.dtn
+	c.id_equipe ,c.nom, c.numero_dossard, c.genre, c.dtn, equipe.nom as nom_equipe
 FROM
     coureur_temps_corrige c_t_c
-	join coureur c on c.id_coureur = c_t_c.id_coureur;
+	join coureur c on c.id_coureur = c_t_c.id_coureur
+	join equipe on c.id_equipe = equipe.id_equipe;
 
 
 --Attribuer des points selon le rang des temps corrigés pour chaque coureur
@@ -215,124 +216,151 @@ from
 
 -- --- classement general
 --categorie Homme
-CREATE OR REPLACE VIEW v_classement_general_coureur_homme_beta AS
+CREATE or replace  VIEW classement_etape_homme AS
 SELECT
-	c.id_coureur,
-    e.id_equipe,
-    e.nom AS nom_equipe,
-	CASE 
-		WHEN ( c.genre = 'M' ) then 0
-		else SUM(ce.points)
-	END AS points_total
+    c.id_etape,
+    c.id_coureur,
+	c.nom_equipe,
+    r.rang,
+    COALESCE(tp.points, 0) AS points, 
+	c.id_equipe
 FROM
-    classement_etape ce
-JOIN
-    coureur c ON ce.id_coureur = c.id_coureur
-JOIN
-    equipe e ON c.id_equipe = e.id_equipe
-GROUP BY
-    c.id_coureur, e.id_equipe, e.nom, c.dtn;
+    coureur_temps_corrige_lib c
+JOIN (
+    SELECT
+        id_etape,
+        id_coureur,
+        DENSE_RANK() OVER (PARTITION BY id_etape ORDER BY temps_total_corrige ASC) AS rang
+    FROM
+        coureur_temps_corrige_lib where genre = 'M'
+) r ON c.id_etape = r.id_etape AND c.id_coureur = r.id_coureur
+LEFT JOIN
+    table_point tp ON r.rang = tp.rang;
 
-CREATE OR REPLACE VIEW v_classement_general_equipe_homme_beta AS
+CREATE OR REPLACE VIEW v_classement_general_equipe_homme_point AS
 select
-	id_equipe, nom_equipe, sum(points_total) as points_total 
-from 
-	v_classement_general_coureur_homme_beta
-	GROUP by id_equipe, nom_equipe;
+	t.id_equipe, t.nom_equipe, sum( points) as points_total
+from
+	classement_etape_homme t
+	GROUP by t.id_equipe, t.nom_equipe
+union all 
+select
+	e.id_equipe, e.nom, 0
+from equipe e;
+
+CREATE OR REPLACE VIEW v_classement_general_equipe_homme_point_total AS
+select
+	t.id_equipe, t.nom_equipe, sum( points_total) as points_total
+from
+	v_classement_general_equipe_homme_point t
+	GROUP by t.id_equipe, t.nom_equipe;
+
 
 CREATE OR REPLACE VIEW v_classement_general_equipe_homme AS
-SELECT
-    id_equipe,
-    nom_equipe,
-	points_total,
-    RANK() OVER (ORDER BY points_total DESC) AS rang
-FROM
-    v_classement_general_equipe_homme_beta
-ORDER BY
-    points_total DESC, rang;
+select
+	t.id_equipe, t.nom_equipe, points_total,
+	RANK() OVER (ORDER BY points_total DESC) AS rang
+from
+	v_classement_general_equipe_homme_point_total t
+ORDER by rang;
 
 
 --categorie femme
-CREATE OR REPLACE VIEW v_classement_general_coureur_femme_beta AS
+CREATE or replace  VIEW classement_etape_femme AS
 SELECT
-	c.id_coureur,
-    e.id_equipe,
-    e.nom AS nom_equipe,
-	CASE 
-		WHEN ( c.genre = 'F' ) then 0
-		else SUM(ce.points)
-	END AS points_total
+    c.id_etape,
+    c.id_coureur,
+	c.nom_equipe,
+    r.rang,
+    COALESCE(tp.points, 0) AS points, 
+	c.id_equipe
 FROM
-    classement_etape ce
-JOIN
-    coureur c ON ce.id_coureur = c.id_coureur
-JOIN
-    equipe e ON c.id_equipe = e.id_equipe
-GROUP BY
-    c.id_coureur, e.id_equipe, e.nom, c.dtn;
+    coureur_temps_corrige_lib c
+JOIN (
+    SELECT
+        id_etape,
+        id_coureur,
+        DENSE_RANK() OVER (PARTITION BY id_etape ORDER BY temps_total_corrige ASC) AS rang
+    FROM
+        coureur_temps_corrige_lib where genre = 'F'
+) r ON c.id_etape = r.id_etape AND c.id_coureur = r.id_coureur
+LEFT JOIN
+    table_point tp ON r.rang = tp.rang;
 
-CREATE OR REPLACE VIEW v_classement_general_equipe_femme_beta AS
+CREATE OR REPLACE VIEW v_classement_general_equipe_femme_point AS
 select
-	id_equipe, nom_equipe, sum(points_total) as points_total 
-from 
-	v_classement_general_coureur_femme_beta
-	GROUP by id_equipe, nom_equipe;
+	t.id_equipe, t.nom_equipe, sum( points) as points_total
+from
+	classement_etape_femme t
+	GROUP by t.id_equipe, t.nom_equipe
+union all 
+select
+	e.id_equipe, e.nom, 0
+from equipe e;
+
+CREATE OR REPLACE VIEW v_classement_general_equipe_femme_point_total AS
+select
+	t.id_equipe, t.nom_equipe, sum( points_total) as points_total
+from
+	v_classement_general_equipe_femme_point t
+	GROUP by t.id_equipe, t.nom_equipe;
+
 
 CREATE OR REPLACE VIEW v_classement_general_equipe_femme AS
-SELECT
-    id_equipe,
-    nom_equipe,
-	points_total,
-    RANK() OVER (ORDER BY points_total DESC) AS rang
-FROM
-    v_classement_general_equipe_femme_beta
-ORDER BY
-    points_total DESC, rang;
+select
+	t.id_equipe, t.nom_equipe, points_total,
+	RANK() OVER (ORDER BY points_total DESC) AS rang
+from
+	v_classement_general_equipe_femme_point_total t
+ORDER by rang;
 
 
 --categorie junior
-CREATE OR REPLACE VIEW v_classement_general_coureur_junior_beta AS
+CREATE or replace  VIEW classement_etape_junior AS
 SELECT
-	c.id_coureur,
-    e.id_equipe,
-    e.nom AS nom_equipe,
-	CASE 
-		WHEN ( is_junior (c.dtn) = 0 ) then 0
-		else SUM(ce.points)
-	END AS points_total
+    c.id_etape,
+    c.id_coureur,
+	c.nom_equipe,
+    r.rang,
+    COALESCE(tp.points, 0) AS points, 
+	c.id_equipe
 FROM
-    classement_etape ce
-JOIN
-    coureur c ON ce.id_coureur = c.id_coureur
-JOIN
-    equipe e ON c.id_equipe = e.id_equipe
-GROUP BY
-    c.id_coureur, e.id_equipe, e.nom, c.dtn;
+    coureur_temps_corrige_lib c
+JOIN (
+    SELECT
+        id_etape,
+        id_coureur,
+        DENSE_RANK() OVER (PARTITION BY id_etape ORDER BY temps_total_corrige ASC) AS rang
+    FROM
+        coureur_temps_corrige_lib where is_junior(dtn) = 1
+) r ON c.id_etape = r.id_etape AND c.id_coureur = r.id_coureur
+LEFT JOIN
+    table_point tp ON r.rang = tp.rang;
 
-CREATE OR REPLACE VIEW v_classement_general_equipe_junior_beta AS
+CREATE OR REPLACE VIEW v_classement_general_equipe_junior_point AS
 select
-	id_equipe, nom_equipe, sum(points_total) as points_total 
-from 
-	v_classement_general_coureur_junior_beta
-	GROUP by id_equipe, nom_equipe;
+	t.id_equipe, t.nom_equipe, sum( points) as points_total
+from
+	classement_etape_junior t
+	GROUP by t.id_equipe, t.nom_equipe
+union all 
+select
+	e.id_equipe, e.nom, 0
+from equipe e;
+
+CREATE OR REPLACE VIEW v_classement_general_equipe_junior_point_total AS
+select
+	t.id_equipe, t.nom_equipe, sum( points_total) as points_total
+from
+	v_classement_general_equipe_junior_point t
+	GROUP by t.id_equipe, t.nom_equipe;
 
 
 CREATE OR REPLACE VIEW v_classement_general_equipe_junior AS
-SELECT
-    id_equipe,
-    nom_equipe,
-	points_total,
-    RANK() OVER (ORDER BY points_total DESC) AS rang
-FROM
-    v_classement_general_equipe_junior_beta
-ORDER BY
-    points_total DESC, rang;
+select
+	t.id_equipe, t.nom_equipe, points_total,
+	RANK() OVER (ORDER BY points_total DESC) AS rang
+from
+	v_classement_general_equipe_junior_point_total t
+ORDER by rang;
 
-create or replace view v_penalite as 
-select 
-	p.*,
-	e.nom as nom_etape,
-	eq.nom as nom_equipe
-from penalite p
-join etape e on e.id_etape = p.id_etape
-join equipe eq on eq.id_equipe = p.id_equipe;
