@@ -25,6 +25,7 @@
                     <th>Nom equipe</th>
                     <th>Point total</th>
                     <th>Rang</th>
+                    <th>Certification</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -35,6 +36,11 @@
                             <td><?php echo $equipe['nom_equipe']; ?></td>
                             <td><?php echo $equipe['points_total']; ?></td>
                             <td><?php echo $equipe['rang']; ?></td>
+                            <td>
+                                <?php if ($equipe['rang'] == 1): ?>
+                                    <a href="<?php echo site_url('Admin/detailsEquipe?id_equipe='.$equipe['id_equipe']); ?>" class="btn btn-primary">Certificat</a>
+                                <?php endif; ?>
+                            </td>
                         </tr>
                         <?php
                     endforeach; ?>
