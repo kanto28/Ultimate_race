@@ -48,6 +48,39 @@ class Admin_controlleur extends CI_Controller {
 		redirect('Admin/dashboard');
 	}
 
+	public function gestion_penalite() {
+		$this->load->model("penalite_model");
+		$data["pages"] = "gestion-penalite";
+		$data["etapes"] = $this->DAO_model->find_all("etape");
+		$data["equipes"] = $this->DAO_model->find_all("equipe");
+		$data["penalites"] = $this->DAO_model->find_all("v_penalite");
+		$data["erreur"] = "aucun";
+
+		$id_etape = $this->input->post("id_etape");
+        $id_equipe = $this->input->post("id_equipe");
+		$temps = $this->input->post("temps");
+		
+		if(!empty($id_etape) && !empty($id_equipe) && !empty($temps) ) {
+			try {
+				// echo $temps;
+				$this->penalite_model->ajout_penalite($id_etape, $id_equipe, $temps);
+				redirect('admin_controlleur/gestion_penalite');
+			} catch (Exception $e) {
+				$data["erreur"] = $e->getMessage();
+			}
+		}
+
+		$this->load->view('dynamic-admin-page', $data);
+	}
+
+	public function supprimer_penalite($id_penalite = null ) {
+		if(!empty($id_penalite)) {
+			$this->load->model("penalite_model");
+			$this->penalite_model->supprimer_penalite ($id_penalite);		
+		}
+		
+	}
+
 	
 
    
