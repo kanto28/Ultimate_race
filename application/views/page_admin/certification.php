@@ -1,3 +1,39 @@
+<style>
+        .certificate {
+            width: 900px;
+            height: 700px;
+            border: 10px solid #ddd;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            background-size: cover;
+        }
+        .certificate .header {
+            font-size: 48px;
+            color: #FFD700;
+        }
+        .certificate .subheader {
+            font-size: 36px;
+            margin: 20px 0;
+        }
+        .certificate .content {
+            font-size: 24px;
+            margin: 40px 0;
+        }
+        .certificate .footer {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .certificate .footer .signature {
+            text-align: center;
+        }
+    </style>
+ 
  <!-- Content wrapper -->
  <div class="content-wrapper">
             <!-- Content -->
@@ -7,31 +43,48 @@
 
         <button type="button" class="btn btn-primary"  onClick="addPdf()" id="export">Exporter PDF </button>
 
-            <div class="row">
-                
-                <div class="col-xl-6" id="table">
-                 <hr>
-                  <div class="card mb-4">
-                    <h5 class="card-header">Certification</h5>
+        <hr>
+           <div class="row" id="table">
+                    
+                    <div class="card mb-4">
+                       <!--<h5 class="card-header">Certification</h5>-->
 
-                    <div class="card-body">
-                        <h1>HAHA</h1>    
-                        <?php
-                         $i = 1;
-                        foreach ($allEquipe as $equipe): ?> 
-                            <?php echo $equipe['nom_equipe']; ?> 
-                            <?php echo $equipe['points_total']; ?>
-                            <?php echo $equipe['rang']; ?>
+                        <div class="card-body">
+                            <div class="certificate">
+                                <div class="header">RUNNING CHAMPION</div>
+                                <div class="subheader">ULTIMATE TEAM RACE</div>
+                                <?php
+                                    $i = 1;
+                                    foreach ($allEquipe as $equipe): ?> 
+                                        
+                                    <div class="content">
+                                        This is to certify that the team <strong><?php echo $equipe['nom_equipe']; ?></strong> <br>
+                                        has successfully accomplished the Track & Field match from Team Company. <br>
+                                        We truly appreciate the hard work, persistence and teamwork, leads to ultimate victory.
+                                    </div>
+                                    <div class="subheader">
+                                            Team: <?php echo $equipe['nom_equipe']; ?> <br>
+                                            Points: <?php echo $equipe['points_total']; ?> <br>
+                                            Rank: <?php echo $equipe['rang']; ?>
+                                    </div>
+                                   
+                                <?php 
+                                $i++;
+                                endforeach;
+                                ?>       
+                                
+                                <div class="footer">
+                                    <div class="signature">
+                                        Signature <br> ____________________
+                                    </div>
+                                    
+                                </div>
+                            </div>
 
-                        <?php 
-                        $i++;
-                        endforeach;
-                            ?>             
-                    </div>  <!-- / card body -->
-
-                </div><!-- / col-->
-
-            </div><!-- / row-->
+                                  
+                        </div> <!-- / card body -->
+                    </div> <!-- / card -->
+            </div> <!-- / row -->
     </div><!-- / container-->
 </div>
 <!-- / Content -->
