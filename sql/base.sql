@@ -47,6 +47,15 @@ CREATE TABLE etape (
     date_debut TIMESTAMP NOT NULL
 );
 
+CREATE TABLE penalite (
+	id_penalite SERIAL PRIMARY KEY,
+    id_etape int not null,
+    id_equipe int NOT NULL,
+    penalite time,
+	FOREIGN key (id_etape) REFERENCES etape(id_etape),
+	FOREIGN key (id_equipe) REFERENCES equipe(id_equipe)
+);
+
 CREATE TABLE participation (
     id_participation SERIAL PRIMARY KEY,
     id_coureur INT NOT NULL,
