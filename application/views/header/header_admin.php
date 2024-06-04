@@ -168,6 +168,13 @@
                       <div data-i18n="Blank">Temps coureur</div>
                     </a>
                 </li>
+
+								<li class="menu-item">
+                    <a href="<?php echo site_url('admin_controlleur/gestion_penalite'); ?>" class="menu-link">
+                      <div data-i18n="Blank">Gestion Penalite</div>
+                    </a>
+                </li>
+
               </ul>
             </li>
 
