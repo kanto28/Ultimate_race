@@ -21,6 +21,7 @@ class Equipe extends CI_Controller  {
 		}
 		$data['categ'] = $categ;
 		$data['listeEquipe'] = $this->Equipe_model->getClassement($categ);
+		$data["stat"] = $this->Equipe_model->chart_classement($data['listeEquipe']);
 
 		if( !empty($this->session->userdata("id_admin")) ) {
 			$pages = $data['pages'];

@@ -43,6 +43,8 @@ class Equipe_model extends CI_Model {
         return $this->db->get('v_classement_general_equipe')->result_array();
     }
 
+	
+
 	public function getClassement($categ) {
 		if($categ == "Tous") {
 			return $this->DAO_model->find_all("v_classement_general_equipe");
@@ -60,6 +62,28 @@ class Equipe_model extends CI_Model {
 			return $this->DAO_model->find_all("v_classement_general_equipe");
 		}
 	}
+
+	public function chart_classement($classement) {
+        $stat = $classement;
+        $labels = "";
+        $datasets_point = "";
+        for($i = 0; $i < count($stat); $i++) {
+            if($i == 0){
+                $labels = "'".$stat[$i]["nom_equipe"]."'";
+                $datasets_point = $stat[$i]["points_total"];
+            }
+            else {
+                $labels = $labels.","."'".$stat[$i]["nom_equipe"]."'";
+                $datasets_point = $datasets_point.",".$stat[$i]["points_total"];
+            }
+            
+        } 
+        $data = [
+            "labels" => $labels,
+            "points" => $datasets_point
+        ];
+        return $data;
+    }
     
 
     public function getDetailEquipe($id) {
