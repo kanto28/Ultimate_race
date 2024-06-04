@@ -19,6 +19,22 @@ class Categorie_model extends CI_Model {
 
 
   
+    public function insert_categorie(){
+        $query = "
+        INSERT INTO categorie (nom_categorie)
+        VALUES 
+            ('Homme'),
+            ('Femme'),
+            ('Junior'),
+            ('Senior')
+    ";
+
+    // Exécution de la requête
+    $this->db->query($query);
+
+    // Retourner le nombre de lignes affectées par l'insertion
+    return $this->db->affected_rows();
+      }
 
 
     

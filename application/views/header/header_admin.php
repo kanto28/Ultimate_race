@@ -143,7 +143,7 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item active">
-              <a href="<?php echo site_url('Login/dashboard'); ?>" class="menu-link">
+              <a href="<?php echo site_url('Admin/dashboard'); ?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
