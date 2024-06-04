@@ -168,5 +168,17 @@ class Admin extends CI_Controller {
 
 		$this->load->view('dynamic-admin-page', $data);
 	}
+
+	public function insert_categories() {
+        // Appeler la méthode du modèle pour insérer les catégories
+        $result = $this->Categorie_model->insert_categorie();
+
+        // Vérifier le résultat de l'insertion
+        if ($result > 0) {
+            redirect('Admin_controlleur/recategoriser');
+        } else {
+            echo "Erreur lors de l'insertion des catégories.";
+        }
+    }
 	
 }
