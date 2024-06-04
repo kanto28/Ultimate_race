@@ -40,7 +40,7 @@
 						<div class="mb-3 row">
 							<label for="html5-time-input" class="col-md-2 col-form-label">Temps</label>
 							<div class="col-md-10">
-							<input class="form-control" type="time" value="12:30:00" id="html5-time-input" name = "temps" required />
+							<input class="form-control" type="time" value="12:30:30" id="html5-time-input" name = "temps" required />
 							</div>
 						</div>
 

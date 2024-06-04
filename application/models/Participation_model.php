@@ -49,6 +49,50 @@ class Participation_model extends CI_Model {
 		$this->insert_Participation($id_coureur, $id_etape, $heure_depart);
 	}
 
+	public function update_penalite( $id_etape ,$id_equipe ) {
+		$sql = "WITH subquery as (
+					SELECT
+						p.id_penalite,
+						p.id_etape,
+						p.id_equipe,
+						p.penalite,
+						c.id_coureur,
+						EXTRACT(EPOCH FROM p.penalite) AS penalite_secondes
+					FROM
+						penalite p
+						join coureur c on c.id_equipe = p.id_equipe
+						where p.id_equipe = $id_equipe and p.id_etape = $id_etape
+				)
+				update participation 
+				set penalite_secondes = subquery.penalite_secondes
+				from subquery
+				where participation.id_coureur = subquery.id_coureur
+				and participation.id_etape = subquery.id_etape";
+		$this->db->query($sql);
+ 	}
+
+	public function delete_penalite( $id_etape ,$id_equipe ) {
+		$sql = "WITH subquery as (
+			SELECT
+				p.id_penalite,
+				p.id_etape,
+				p.id_equipe,
+				p.penalite,
+				c.id_coureur,
+				0 AS penalite_secondes
+			FROM
+				penalite p
+				join coureur c on c.id_equipe = p.id_equipe
+				where p.id_equipe = $id_equipe and p.id_etape = $id_etape
+		)
+		update participation 
+		set penalite_secondes = subquery.penalite_secondes
+		from subquery
+		where participation.id_coureur = subquery.id_coureur
+		and participation.id_etape = subquery.id_etape";
+		$this->db->query($sql);
+	}
+
     public function get_coureurs_by_equipe($id_equipe) {
         $query = $this->db->get_where('coureur', array('id_equipe' => $id_equipe));
         return $query->result_array();

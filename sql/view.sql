@@ -327,3 +327,12 @@ FROM
     v_classement_general_equipe_junior_beta
 ORDER BY
     points_total DESC, rang;
+
+create or replace view v_penalite as 
+select 
+	p.*,
+	e.nom as nom_etape,
+	eq.nom as nom_equipe
+from penalite p
+join etape e on e.id_etape = p.id_etape
+join equipe eq on eq.id_equipe = p.id_equipe;

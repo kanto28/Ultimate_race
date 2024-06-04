@@ -55,6 +55,7 @@ CREATE TABLE penalite (
 	FOREIGN key (id_etape) REFERENCES etape(id_etape),
 	FOREIGN key (id_equipe) REFERENCES equipe(id_equipe)
 );
+alter table penalite add UNIQUE (id_etape, id_equipe);
 
 CREATE TABLE participation (
     id_participation SERIAL PRIMARY KEY,
@@ -63,8 +64,6 @@ CREATE TABLE participation (
     heure_depart TIMESTAMP,
     heure_arrivee TIMESTAMP,
     penalite_secondes INT DEFAULT 0,
-    -- rang INT NOT NULL,
-    -- points_obtenus INT NOT NULL,
     FOREIGN KEY (id_coureur) REFERENCES coureur(id_coureur),
     FOREIGN KEY (id_etape) REFERENCES etape(id_etape),
     UNIQUE (id_coureur, id_etape)
