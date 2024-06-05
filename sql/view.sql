@@ -372,3 +372,32 @@ select
 from penalite p
 join etape e on e.id_etape = p.id_etape
 join equipe eq on eq.id_equipe = p.id_equipe;
+
+
+--resultat coureur
+create view v_resultat_coureur as
+SELECT
+    ce.id_etape,
+    e.nom AS nom_etape,
+    c.nom AS nom_coureur,
+    c.genre,
+    c.numero_dossard,
+    ce.rang,
+    ce.points,
+    p.penalite_secondes,
+    c_t_c.temps_total_format, -- Ajout du temps total formaté
+    c.id_equipe
+FROM
+    classement_etape ce
+JOIN
+    coureur c ON ce.id_coureur = c.id_coureur
+JOIN
+    etape e ON ce.id_etape = e.id_etape
+JOIN
+    equipe eq ON c.id_equipe = eq.id_equipe
+JOIN
+    participation p ON ce.id_coureur = p.id_coureur AND ce.id_etape = p.id_etape
+JOIN
+    coureur_temps_corrige_lib c_t_c ON ce.id_coureur = c_t_c.id_coureur AND ce.id_etape = c_t_c.id_etape
+ORDER BY
+    ce.points DESC, ce.id_etape, ce.rang;
