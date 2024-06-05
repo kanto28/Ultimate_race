@@ -6,6 +6,7 @@ class Equipe extends CI_Controller  {
     public function __construct() {
         parent::__construct();       
         $this->load->model('Equipe_model'); 
+		$this->load->model('DAO_model');
 		if ( empty($this->session->userdata("id_admin")) && empty ( ($this->session->userdata("id_equipe")  )) ) {
 			redirect('login/index');
         }
@@ -22,6 +23,7 @@ class Equipe extends CI_Controller  {
 		$data['categ'] = $categ;
 		$data['listeEquipe'] = $this->Equipe_model->getClassement($categ);
 		$data["stat"] = $this->Equipe_model->chart_classement($data['listeEquipe']);
+		// $data["categories"] = $this->DAO_model->find_all("categorie");
 
 		if( !empty($this->session->userdata("id_admin")) ) {
 			$pages = $data['pages'];
