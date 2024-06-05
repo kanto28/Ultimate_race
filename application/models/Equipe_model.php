@@ -49,17 +49,15 @@ class Equipe_model extends CI_Model {
 		if($categ == "Tous") {
 			return $this->DAO_model->find_all("v_classement_general_equipe");
 		}
-		if($categ == "Homme") {
-			return $this->DAO_model->find_all("v_classement_general_equipe_homme");
-		}
-		if($categ == "Femme") {
-			return $this->DAO_model->find_all("v_classement_general_equipe_femme");
-		}
-		if($categ == "Junior") {
-			return $this->DAO_model->find_all("v_classement_general_equipe_junior");
-		}
 		else {
-			return $this->DAO_model->find_all("v_classement_general_equipe");
+			$sql = "SELECT
+						t.id_equipe, t.nom_equipe, points_total,
+						RANK() OVER (ORDER BY points_total DESC) AS rang
+					from
+						v_classement_general_equipe_point_total t
+						where nom_categorie = '$categ'
+					ORDER by rang";
+			return $this->DAO_model->find_by_request($sql);
 		}
 	}
 
