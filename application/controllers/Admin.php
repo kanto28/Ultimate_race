@@ -8,6 +8,7 @@ class Admin extends CI_Controller {
         $this->load->model('Admin_model');
 		$this->load->model('Categorie_model');
 		$this->load->model('Equipe_model');
+		$this->load->model('Etape_model');
     }
 
 	public function index()
@@ -190,6 +191,15 @@ class Admin extends CI_Controller {
         $data['allEquipe'] = $this->Equipe_model->getDetailEquipe($id_equipe);
 		$this->load->view('header/header_admin');
 		$this->load->view('page_admin/certification',$data);
+		$this->load->view('footer/footer');
+	}
+
+	public function detailsEtape()
+	{
+        $id_etape = $this->input->get('id_etape'); 
+        $data['allEtape'] = $this->Etape_model->getDetailEtape($id_etape);
+		$this->load->view('header/header_admin');
+		$this->load->view('page_admin/resultat',$data);
 		$this->load->view('footer/footer');
 	}
 }

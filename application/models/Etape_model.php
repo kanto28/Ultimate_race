@@ -48,6 +48,13 @@ class Etape_model extends CI_Model {
         return $this->db->insert("etape", $data);
     }
    
+	public function getDetailEtape($id) {
+        $this->db->where('id_etape', $id);
+        $query = $this->db->get('v_resultat_coureur');
+		return $query->result_array();
+       
+    }
+   
    
 }
 ?>
